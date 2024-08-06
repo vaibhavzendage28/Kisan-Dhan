@@ -1,8 +1,6 @@
 from flask import Flask,request, render_template
 import numpy as np
 import pickle
-import sklearn
-import mysql.connector
 from dotenv import load_dotenv
 import os
 
@@ -22,17 +20,6 @@ preprocessor = pickle.load(open('preprocessor.pkl','rb'))
 #flask app
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
-# Data Base Connection
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password=PASSWORD,
-  database=DATABASE_NAME
-)
-
-# Cursor for Data base
-mycursor = mydb.cursor()
-
 
 @app.route('/')
 def index():
@@ -46,267 +33,262 @@ def home():
 def submitcropdata():
     return render_template('submitCropDetails.html')  
 
-@app.route('/cropDetailsSubmited',methods=['POST'])
-def cropdatasubmited():
-    if request.method == 'POST':
-        commodity = request.form['commodityname']
-        district = request.form['district']
-        sql = "INSERT INTO crop_statistics (commodity,dist) VALUES (%s,%s)"
-        val = (commodity,district)
-        mycursor.execute(sql,val)
+# @app.route('/cropDetailsSubmited',methods=['POST'])
+# def cropdatasubmited():
+#     if request.method == 'POST':
+#         commodity = request.form['commodityname']
+#         district = request.form['district']
+#         sql = "INSERT INTO crop_statistics (commodity,dist) VALUES (%s,%s)"
+#         val = (commodity,district)
+#         mycursor.execute(sql,val)
 
-        mydb.commit()
-        return render_template('cropDataSubmit.html')  
+#         mydb.commit()
+#         return render_template('cropDataSubmit.html')  
 
 
 @app.route('/predict')
 def predict():
     return render_template('predict.html')  
 
-@app.route('/crop_statistics',methods=['POST','GET'])
-def crop_statistics():
+# @app.route('/crop_statistics',methods=['POST','GET'])
+# def crop_statistics():
 
-    sql = "SELECT * FROM crop_statistics WHERE commodity= 'Jowar'"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
+#     sql = "SELECT * FROM crop_statistics WHERE commodity= 'Jowar'"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
 
-    distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
-    jowarcount = [0,0,0,0,0]
+#     distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
+#     jowarcount = [0,0,0,0,0]
 
-    distcount = 0
-    for district in distlist:
-        for dist in data:
-            if(dist[1] == district):
-                jowarcount[distcount] = jowarcount[distcount] + 1
-        distcount = distcount + 1
+#     distcount = 0
+#     for district in distlist:
+#         for dist in data:
+#             if(dist[1] == district):
+#                 jowarcount[distcount] = jowarcount[distcount] + 1
+#         distcount = distcount + 1
 
 
-    sql = "SELECT * FROM crop_statistics"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
+#     sql = "SELECT * FROM crop_statistics"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
 
-    commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
-    crop_per_dist = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
+#     commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
+#     crop_per_dist = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
     
     
-    for dataele in data:
-        commodityindex = commoditylist.index(dataele[0])
-        distindex = distlist.index(dataele[1])
-        crop_per_dist[distindex][commodityindex] = crop_per_dist[distindex][commodityindex] + 1
+#     for dataele in data:
+#         commodityindex = commoditylist.index(dataele[0])
+#         distindex = distlist.index(dataele[1])
+#         crop_per_dist[distindex][commodityindex] = crop_per_dist[distindex][commodityindex] + 1
 
-    crop_state = [0,0,0,0,0]
-    sum =0
-    i=0
-    for ele in crop_per_dist:
-        for ele_value in ele:
-            crop_state[i] = crop_state[i] + ele_value
-            i = i+1
-        i =0
+#     crop_state = [0,0,0,0,0]
+#     sum =0
+#     i=0
+#     for ele in crop_per_dist:
+#         for ele_value in ele:
+#             crop_state[i] = crop_state[i] + ele_value
+#             i = i+1
+#         i =0
 
-    print(crop_state)
-    mydb.commit()
+#     print(crop_state)
+#     mydb.commit()
     
-    return render_template("crop_statistics.html",jowarsowingdata = jowarcount,
-                                            distlabel = distlist,
-                                            solapur_crop=crop_per_dist[0],
-                                            nanded_crop = crop_per_dist[1],
-                                            buldhana_crop = crop_per_dist[2],
-                                            amravati_crop = crop_per_dist[3],
-                                            sambhajinagar_crop = crop_per_dist[4],
-                                            crop_state_data = crop_state
-                                            )
+#     return render_template("crop_statistics.html",jowarsowingdata = jowarcount,
+#                                             distlabel = distlist,
+#                                             solapur_crop=crop_per_dist[0],
+#                                             nanded_crop = crop_per_dist[1],
+#                                             buldhana_crop = crop_per_dist[2],
+#                                             amravati_crop = crop_per_dist[3],
+#                                             sambhajinagar_crop = crop_per_dist[4],
+#                                             crop_state_data = crop_state
+#                                             )
     
-@app.route('/Jowar')
-def jowar():
+# @app.route('/Jowar')
+# def jowar():
+#     sql = "SELECT * FROM crop_statistics WHERE commodity= 'Jowar'"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
+
+#     distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
+#     jowarcount = [0,0,0,0,0]
+
+#     distcount = 0
+#     for district in distlist:
+#         for dist in data:
+#             if(dist[1] == district):
+#                 jowarcount[distcount] = jowarcount[distcount] + 1
+#         distcount = distcount + 1
+
+#     return render_template('commodity.html',ID="Jowar",jowardata=jowarcount)   
 
 
+# @app.route('/Bajara')
+# def bajara():
 
-    
+#     sql = "SELECT * FROM crop_statistics WHERE commodity= 'Bajara'"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
 
-    sql = "SELECT * FROM crop_statistics WHERE commodity= 'Jowar'"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
+#     distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
+#     jowarcount = [0,0,0,0,0]
 
-    distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
-    jowarcount = [0,0,0,0,0]
+#     distcount = 0
+#     for district in distlist:
+#         for dist in data:
+#             if(dist[1] == district):
+#                 jowarcount[distcount] = jowarcount[distcount] + 1
+#         distcount = distcount + 1
 
-    distcount = 0
-    for district in distlist:
-        for dist in data:
-            if(dist[1] == district):
-                jowarcount[distcount] = jowarcount[distcount] + 1
-        distcount = distcount + 1
-
-    return render_template('commodity.html',ID="Jowar",jowardata=jowarcount)   
-
-
-@app.route('/Bajara')
-def bajara():
-
-    sql = "SELECT * FROM crop_statistics WHERE commodity= 'Bajara'"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
-
-    distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
-    jowarcount = [0,0,0,0,0]
-
-    distcount = 0
-    for district in distlist:
-        for dist in data:
-            if(dist[1] == district):
-                jowarcount[distcount] = jowarcount[distcount] + 1
-        distcount = distcount + 1
-
-    return render_template('commodity.html',ID="Bajara",jowardata=jowarcount)   
+#     return render_template('commodity.html',ID="Bajara",jowardata=jowarcount)   
 
 
-@app.route('/Cotton')
-def cotton():
+# @app.route('/Cotton')
+# def cotton():
 
-    sql = "SELECT * FROM crop_statistics WHERE commodity= 'Cotton'"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
+#     sql = "SELECT * FROM crop_statistics WHERE commodity= 'Cotton'"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
 
-    distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
-    jowarcount = [0,0,0,0,0]
+#     distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
+#     jowarcount = [0,0,0,0,0]
 
-    distcount = 0
-    for district in distlist:
-        for dist in data:
-            if(dist[1] == district):
-                jowarcount[distcount] = jowarcount[distcount] + 1
-        distcount = distcount + 1
+#     distcount = 0
+#     for district in distlist:
+#         for dist in data:
+#             if(dist[1] == district):
+#                 jowarcount[distcount] = jowarcount[distcount] + 1
+#         distcount = distcount + 1
 
-    return render_template('commodity.html',ID="Cotton",jowardata=jowarcount)   
-
-
-@app.route('/Sugarcane')
-def sugarcane():
-
-    sql = "SELECT * FROM crop_statistics WHERE commodity= 'Sugarcane'"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
-
-    distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
-    jowarcount = [0,0,0,0,0]
-
-    distcount = 0
-    for district in distlist:
-        for dist in data:
-            if(dist[1] == district):
-                jowarcount[distcount] = jowarcount[distcount] + 1
-        distcount = distcount + 1
-
-    return render_template('commodity.html',ID="SugarCane",jowardata=jowarcount)   
+#     return render_template('commodity.html',ID="Cotton",jowardata=jowarcount)   
 
 
-@app.route('/Wheat')
-def wheat():
+# @app.route('/Sugarcane')
+# def sugarcane():
 
-    sql = "SELECT * FROM crop_statistics WHERE commodity= 'Wheat'"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
+#     sql = "SELECT * FROM crop_statistics WHERE commodity= 'Sugarcane'"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
 
-    distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
-    jowarcount = [0,0,0,0,0]
+#     distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
+#     jowarcount = [0,0,0,0,0]
 
-    distcount = 0
-    for district in distlist:
-        for dist in data:
-            if(dist[1] == district):
-                jowarcount[distcount] = jowarcount[distcount] + 1
-        distcount = distcount + 1
+#     distcount = 0
+#     for district in distlist:
+#         for dist in data:
+#             if(dist[1] == district):
+#                 jowarcount[distcount] = jowarcount[distcount] + 1
+#         distcount = distcount + 1
 
-    return render_template('commodity.html',ID="Wheat",jowardata=jowarcount)   
+#     return render_template('commodity.html',ID="SugarCane",jowardata=jowarcount)   
+
+
+# @app.route('/Wheat')
+# def wheat():
+
+#     sql = "SELECT * FROM crop_statistics WHERE commodity= 'Wheat'"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
+
+#     distlist = ['Solapur','Nanded','Buldhana','Amravati','Sambhajinagar']
+#     jowarcount = [0,0,0,0,0]
+
+#     distcount = 0
+#     for district in distlist:
+#         for dist in data:
+#             if(dist[1] == district):
+#                 jowarcount[distcount] = jowarcount[distcount] + 1
+#         distcount = distcount + 1
+
+#     return render_template('commodity.html',ID="Wheat",jowardata=jowarcount)   
 
 
 
 
-@app.route('/Solapur')
-def solapur():
+# @app.route('/Solapur')
+# def solapur():
      
-    sql = "SELECT * FROM crop_statistics WHERE dist= 'Solapur'"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
+#     sql = "SELECT * FROM crop_statistics WHERE dist= 'Solapur'"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
 
-    commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
-    crop_frequency = [0,0,0,0,0]
+#     commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
+#     crop_frequency = [0,0,0,0,0]
     
     
-    for dataele in data:
-        commodityindex = commoditylist.index(dataele[0])
-        crop_frequency[commodityindex] = crop_frequency[commodityindex] + 1
+#     for dataele in data:
+#         commodityindex = commoditylist.index(dataele[0])
+#         crop_frequency[commodityindex] = crop_frequency[commodityindex] + 1
 
-    return render_template('district.html',ID="Solapur",crop_frequency=crop_frequency)  
+#     return render_template('district.html',ID="Solapur",crop_frequency=crop_frequency)  
 
-@app.route('/Nanded')
-def nanded():
+# @app.route('/Nanded')
+# def nanded():
      
-    sql = "SELECT * FROM crop_statistics WHERE dist= 'Nanded'"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
+#     sql = "SELECT * FROM crop_statistics WHERE dist= 'Nanded'"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
 
-    commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
-    crop_frequency = [0,0,0,0,0]
+#     commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
+#     crop_frequency = [0,0,0,0,0]
     
     
-    for dataele in data:
-        commodityindex = commoditylist.index(dataele[0])
-        crop_frequency[commodityindex] = crop_frequency[commodityindex] + 1
+#     for dataele in data:
+#         commodityindex = commoditylist.index(dataele[0])
+#         crop_frequency[commodityindex] = crop_frequency[commodityindex] + 1
 
-    return render_template('district.html',ID="Nanded",crop_frequency=crop_frequency)  
+#     return render_template('district.html',ID="Nanded",crop_frequency=crop_frequency)  
 
 
-@app.route('/Buldhana')
-def buldhana():
+# @app.route('/Buldhana')
+# def buldhana():
      
-    sql = "SELECT * FROM crop_statistics WHERE dist= 'Buldhana'"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
+#     sql = "SELECT * FROM crop_statistics WHERE dist= 'Buldhana'"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
 
-    commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
-    crop_frequency = [0,0,0,0,0]
+#     commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
+#     crop_frequency = [0,0,0,0,0]
     
     
-    for dataele in data:
-        commodityindex = commoditylist.index(dataele[0])
-        crop_frequency[commodityindex] = crop_frequency[commodityindex] + 1
+#     for dataele in data:
+#         commodityindex = commoditylist.index(dataele[0])
+#         crop_frequency[commodityindex] = crop_frequency[commodityindex] + 1
 
-    return render_template('district.html',ID="Buldhana",crop_frequency=crop_frequency)  
+#     return render_template('district.html',ID="Buldhana",crop_frequency=crop_frequency)  
 
-@app.route('/Amaravati')
-def amaravati():
+# @app.route('/Amaravati')
+# def amaravati():
      
-    sql = "SELECT * FROM crop_statistics WHERE dist= 'Amravati'"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
+#     sql = "SELECT * FROM crop_statistics WHERE dist= 'Amravati'"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
 
-    commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
-    crop_frequency = [0,0,0,0,0]
+#     commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
+#     crop_frequency = [0,0,0,0,0]
     
     
-    for dataele in data:
-        commodityindex = commoditylist.index(dataele[0])
-        crop_frequency[commodityindex] = crop_frequency[commodityindex] + 1
+#     for dataele in data:
+#         commodityindex = commoditylist.index(dataele[0])
+#         crop_frequency[commodityindex] = crop_frequency[commodityindex] + 1
 
-    return render_template('district.html',ID="Amaravati",crop_frequency=crop_frequency)  
+#     return render_template('district.html',ID="Amaravati",crop_frequency=crop_frequency)  
 
-@app.route('/Sambhajinagar')
-def sambhajinagar():
+# @app.route('/Sambhajinagar')
+# def sambhajinagar():
      
-    sql = "SELECT * FROM crop_statistics WHERE dist= 'Sambhajinagar'"
-    mycursor.execute(sql)
-    data = mycursor.fetchall()
+#     sql = "SELECT * FROM crop_statistics WHERE dist= 'Sambhajinagar'"
+#     mycursor.execute(sql)
+#     data = mycursor.fetchall()
 
-    commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
-    crop_frequency = [0,0,0,0,0]
+#     commoditylist = ['Jowar','Bajara','Cotton','Sugarcane','Wheat']
+#     crop_frequency = [0,0,0,0,0]
     
     
-    for dataele in data:
-        commodityindex = commoditylist.index(dataele[0])
-        crop_frequency[commodityindex] = crop_frequency[commodityindex] + 1
+#     for dataele in data:
+#         commodityindex = commoditylist.index(dataele[0])
+#         crop_frequency[commodityindex] = crop_frequency[commodityindex] + 1
 
-    return render_template('district.html',ID="Sambhajinar",crop_frequency=crop_frequency)  
+#     return render_template('district.html',ID="Sambhajinar",crop_frequency=crop_frequency)  
 
 
 @app.route('/result',methods=['POST'])
