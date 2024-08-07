@@ -2,6 +2,7 @@ from flask import Flask,request, render_template
 import numpy as np
 import pickle
 import os
+import json
 
 #loading models
 Jmodel = pickle.load(open('jmodel.pkl','rb'))
@@ -41,6 +42,7 @@ def result():
         avgPriceyear = []
         mspyear = []
         mspnextyear = []
+        avgPriceNextyear = []
         months_labels = ["jan","Feb","March","April","May","June","July","Aug","Sept","Oct","Nov","Dec"]
         monthcount = 1
         yearcount = 2021
@@ -87,6 +89,8 @@ def result():
                 predicted_value = round(prediction[0][0] , 3)
                 predictionMsp = round((predicted_value*2970)/100,2)
                 mspnextyear.append(predictionMsp)
+                predictionAvg = round((predicted_value*1550)/100,2)
+                avgPriceNextyear.append(predictionAvg)
                 x_count = x_count + 1
 
         elif(commoditytype == "Wheat"):
@@ -116,6 +120,8 @@ def result():
                 predicted_value = round(prediction[0][0] , 3)
                 predictionMsp = round((predicted_value*2970)/100,2)
                 mspnextyear.append(predictionMsp)
+                predictionAvg = round((predicted_value*2125)/100,2)
+                avgPriceNextyear.append(predictionAvg)
                 x_count = x_count + 1
         
         elif(commoditytype == "Cotton"):
@@ -133,7 +139,7 @@ def result():
                 predicted_value = round(prediction[0][0] , 3)
                 predictionMsp = round((predicted_value*3600)/100,2)
                 mspyear.append(predictionMsp)
-                predictionAvg = round((predicted_value*6080)/100,2)
+                predictionAvg = round((predicted_value*3080)/100,2)
                 avgPriceyear.append(predictionAvg)
                 monthcount = monthcount + 1
                 x_count = x_count + 1
@@ -145,6 +151,8 @@ def result():
                 predicted_value = round(prediction[0][0] , 3)
                 predictionMsp = round((predicted_value*2970)/100,2)
                 mspnextyear.append(predictionMsp)
+                predictionAvg = round((predicted_value*3080)/100,2)
+                avgPriceNextyear.append(predictionAvg)
                 x_count = x_count + 1
         
         elif(commoditytype == "Sugarcane"):
@@ -174,6 +182,8 @@ def result():
                 predicted_value = round(prediction[0][0] , 3)
                 predictionMsp = round((predicted_value*2970)/100,2)
                 mspnextyear.append(predictionMsp)
+                predictionAvg = round((predicted_value*2775)/100,2)
+                avgPriceNextyear.append(predictionAvg)
                 x_count = x_count + 1
         
         elif(commoditytype == "Bajara"):
@@ -189,9 +199,9 @@ def result():
                 transformed_features = preprocessor.transform(features)
                 prediction = Bmodel.predict(transformed_features).reshape(1,-1)
                 predicted_value = round(prediction[0][0] , 3)
-                predictionMsp = round((predicted_value*1175)/100,2)
+                predictionMsp = round((predicted_value*2350)/100,2)
                 mspyear.append(predictionMsp)
-                predictionAvg = round((predicted_value*2350)/100,2)
+                predictionAvg = round((predicted_value*1175)/100,2)
                 avgPriceyear.append(predictionAvg)
                 monthcount = monthcount + 1
                 x_count = x_count + 1
@@ -203,6 +213,8 @@ def result():
                 predicted_value = round(prediction[0][0] , 3)
                 predictionMsp = round((predicted_value*2970)/100,2)
                 mspnextyear.append(predictionMsp)
+                predictionAvg = round((predicted_value*2350)/100,2)
+                avgPriceNextyear.append(predictionAvg)
                 x_count = x_count + 1
 
 
@@ -220,6 +232,7 @@ def result():
 
 
         return render_template('result.html',prediction = predicted_value,
+                                             cropface = cropface,
                                              min_value = min_value,
                                              max_value = max_value,
                                              avg_value= avg_value,
@@ -233,9 +246,10 @@ def result():
                                              goldmonth = goldmonthindex,
                                              silvermonth = silvermonthindex,
                                              months_labels = months_labels,
-                                             mspyear = mspyear,
-                                             mspnextyear = mspnextyear,
-                                             cropface = cropface
+                                             mspyear = json.dumps(mspyear),
+                                             minPriceYear = json.dumps(avgPriceyear),
+                                             mspnextyear = json.dumps(mspnextyear),
+                                             minPriceNextYear = json.dumps(avgPriceNextyear)
                                              )
         
 
