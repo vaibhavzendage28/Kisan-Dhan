@@ -106,9 +106,9 @@ def result():
                 transformed_features = preprocessor.transform(features)
                 prediction = Wmodel.predict(transformed_features).reshape(1,-1)
                 predicted_value = round(prediction[0][0] , 3)
-                predictionMsp = round((predicted_value*1350)/100,2)
+                predictionMsp = round((predicted_value*2125)/100,2)
                 mspyear.append(predictionMsp)
-                predictionAvg = round((predicted_value*2125)/100,2)
+                predictionAvg = round((predicted_value*1350)/100,2)
                 avgPriceyear.append(predictionAvg)
                 monthcount = monthcount + 1
                 x_count = x_count + 1
@@ -137,9 +137,9 @@ def result():
                 transformed_features = preprocessor.transform(features)
                 prediction = Cmodel.predict(transformed_features).reshape(1,-1)
                 predicted_value = round(prediction[0][0] , 3)
-                predictionMsp = round((predicted_value*3600)/100,2)
+                predictionMsp = round((predicted_value*6080)/100,2)
                 mspyear.append(predictionMsp)
-                predictionAvg = round((predicted_value*3080)/100,2)
+                predictionAvg = round((predicted_value*3600)/100,2)
                 avgPriceyear.append(predictionAvg)
                 monthcount = monthcount + 1
                 x_count = x_count + 1
@@ -149,9 +149,9 @@ def result():
                 transformed_features = preprocessor.transform(features)
                 prediction = Cmodel.predict(transformed_features).reshape(1,-1)
                 predicted_value = round(prediction[0][0] , 3)
-                predictionMsp = round((predicted_value*2970)/100,2)
+                predictionMsp = round((predicted_value*6080)/100,2)
                 mspnextyear.append(predictionMsp)
-                predictionAvg = round((predicted_value*3080)/100,2)
+                predictionAvg = round((predicted_value*3600)/100,2)
                 avgPriceNextyear.append(predictionAvg)
                 x_count = x_count + 1
         
@@ -168,9 +168,9 @@ def result():
                 transformed_features = preprocessor.transform(features)
                 prediction = Smodel.predict(transformed_features).reshape(1,-1)
                 predicted_value = round(prediction[0][0] , 3)
-                predictionMsp = round((predicted_value*2250)/100,2)
+                predictionMsp = round((predicted_value*2775)/100,2)
                 mspyear.append(predictionMsp)
-                predictionAvg = round((predicted_value*2775)/100,2)
+                predictionAvg = round((predicted_value*2250)/100,2)
                 avgPriceyear.append(predictionAvg)
                 monthcount = monthcount + 1
                 x_count = x_count + 1
