@@ -29,9 +29,11 @@ def index():
 def home():
     return render_template('homepage.html')    
 
-@app.route('/submitCropData')
-def submitcropdata():
-    return render_template('submitCropDetails.html')  
+
+@app.route('/predict')
+def predict():
+    return render_template('predict.html') 
+
 
 @app.route('/result',methods=['POST'])
 def result():
