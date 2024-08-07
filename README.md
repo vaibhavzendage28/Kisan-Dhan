@@ -97,7 +97,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd <folder name>
+  cd Crop_Price_Prediction
 ```
 
 Install dependencies
@@ -112,12 +112,6 @@ Start the server
   python app.py
 ```
 
-
-## Demo
-
-Demo Video link
-
-(https://drive.google.com/drive/folders/1RtQuL1ES1gaHTH7yepRGE3mqI8t23SsS?usp=sharing)
 
 ## Contributors
 
