@@ -1,13 +1,7 @@
 from flask import Flask,request, render_template
 import numpy as np
 import pickle
-from dotenv import load_dotenv
 import os
-
-load_dotenv()
-
-PASSWORD = os.getenv('PASSWORD')
-DATABASE_NAME = os.getenv('DATABASE_NAME')
 
 #loading models
 Jmodel = pickle.load(open('jmodel.pkl','rb'))
