@@ -48,7 +48,7 @@ def result():
         yearcount = 2021
 
         rainfall2024 = [1,2,3,1,8,673,1318,779,408,106,44,8]
-        rainfall2023 = [90,7.2,29.9,41.4,67.6,148.6,315.9,162.7,190.3,50.8,9.3,8]
+        rainfall2023 = [18,0,28,6,10,211,311,779,408,106,44,8]
         x_count =0 
 
         cropimges = ['/static/images/jowarlogo.webp',
