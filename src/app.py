@@ -22,7 +22,6 @@ preprocessor = pickle.load(open('preprocessor.pkl','rb'))
 #flask app
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
-# app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 app.config["MONGO_URI"] = MONGO_URL
 mongo = PyMongo(app)
 

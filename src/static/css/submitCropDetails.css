@@ -57,7 +57,7 @@ form{
     width:750px;
     padding:20px;
   }
-  .formcontent input{
+  .formcontent select{
     background-color:whitesmoke;
     border-radius:5px;
     border:2px solid rgb(224, 215, 215);
