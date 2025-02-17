@@ -64,6 +64,8 @@ def crop_statistics():
 
     cursor  = collection.find({})
     data = list(cursor)
+
+    print(data)
   
     crop_per_dist = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
     
