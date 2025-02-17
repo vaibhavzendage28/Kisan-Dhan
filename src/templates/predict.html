@@ -42,13 +42,20 @@
 
     <div class="form">
         <form action="/result" method="post">
-        <div class="formcontent">
-            <label for="commodityname">CommodityName</label>
-            <input name="commodityname" type="text" placeholder="Ex 'Jowar'">
+       <div class="formcontent">
+        <label for="commodityname">Commodity</label>
+          <select name="commodityname" required>
+            <option value="">Commodity Name</option>
+            <option value="Jowar">Jowar</option>
+            <option value="Wheat">Wheat</option>
+            <option value="Bajra">Bajra</option>
+            <option value="Sugarcane">Sugarcane</option>
+            <option value="Cotton">Cotton</option>
+          </select>
         </div>
         <div class="formcontent">
             <label for="month">Month</label>
-            <input name="month" type="number" placeholder="Between 1 to 12">
+            <input name="month" type="number" placeholder="Between 1 to 12" required>
         </div>
         <div class="formcontent">
             <label for="year">Year</label>
@@ -56,7 +63,7 @@
         </div>
         <div class="formcontent">
             <label for="average_rain_fall">Average_rain_fall in mm</label>
-            <input name="average_rain_fall" type="number" step="any" placeholder="Ex '67.6'">
+            <input name="average_rain_fall" type="number" step="any" placeholder="Ex '67.6'" required>
         </div>
       
         <div class="formcontent">
