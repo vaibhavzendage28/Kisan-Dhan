@@ -12,35 +12,11 @@
         <div class="container">
             <h2>Crop Sowing Details</h2>
            </div>
-           <div class="dropdown commoditylist">
-            <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Commodity List
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Jowar</a></li>
-              <li><a class="dropdown-item" href="#">Wheat</a></li>
-              <li><a class="dropdown-item" href="#">Bajra</a></li>
-              <li><a class="dropdown-item" href="#">Sugarcane</a></li>
-              <li><a class="dropdown-item" href="#">Cotton</a></li>
-            </ul>
-          </div>
-          <div class="dropdown commoditylist">
-            <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              District List
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Solapur</a></li>
-              <li><a class="dropdown-item" href="#">Nanded</a></li>
-              <li><a class="dropdown-item" href="#">Amravati</a></li>
-              <li><a class="dropdown-item" href="#">Sambhajinagar</a></li>
-              <li><a class="dropdown-item" href="#">Buldhana</a></li>
-            </ul>
-          </div>
            <a href="/crop_statistics">Back</a>
     </nav>
     <form action="/cropDetailsSubmited" method="post">
         <div class="formcontent">
-          <select name="commodityname">
+          <select name="commodityname" required>
             <option value="">Commodity Name</option>
             <option value="Jowar">Jowar</option>
             <option value="Wheat">Wheat</option>
@@ -50,7 +26,7 @@
           </select>
         </div>
         <div class="formcontent">
-            <select name="district">
+            <select name="district" required>
               <option value="">District</option>
               <option value="Solapur">Solapur</option>
               <option value="Nanded">Nanded</option>
