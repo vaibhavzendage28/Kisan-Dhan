@@ -1,8 +1,6 @@
 
 # Crop Price Prediction Using Random Forest (Supervised Machine learning Algorithm)
 
-#### [Research Paper](https://internationalpubls.com/index.php/cana/article/view/762)
-
 #### [Project Demo](https://www.youtube.com/watch?v=AkiO8RtKaps)
 
 #### [Updated Version Demo](https://youtu.be/NM0VEcjNxeE)
